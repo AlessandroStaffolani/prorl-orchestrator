@@ -3,4 +3,4 @@ PRORL: Proactive Resource Orchestrator for Open RANs using Deep Reinforcement Le
 
 ## Coming Soon
 
-**We are going to release the official code soon. Meanwhile, contact alessandro.staffolani@unbo.it if needed soon.**
+**We are going to release the official code soon. In the meanwhile, please contact alessandro.staffolani@unibo.it.**
