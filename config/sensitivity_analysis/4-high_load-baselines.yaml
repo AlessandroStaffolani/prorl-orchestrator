@@ -1,0 +1,557 @@
+base_run_config:
+  emulator:
+    model:
+      auto_configurable_model_options:
+        average_loads:
+          - 0.8
+        change_load_interval: 7200
+        change_profiles_interval: -1
+        node_load_profiles:
+          res_1:
+            - 40
+            - 20
+            - 12
+            - 8
+        resource_absolute_values:
+          res_1: 100
+        std: 1
+      base_station_name_mappings:
+        bs_1: bs_1
+        bs_2: bs_2
+        bs_3: bs_3
+        bs_4: bs_4
+      model_disk:
+        base_folder: models
+        episodes_to_generate:
+          training: 100
+          validation: 1
+          evaluation: 1
+        seeds:
+          training:
+            - 10
+          validation:
+            - 10
+          evaluation:
+            - 10
+        use_disk: false
+      n_base_stations: 8
+      n_resources: 1
+      nodes_demand_model_options:
+        average_loads:
+          - 0.8
+        change_load_interval: 7200
+        change_profiles_interval: -1
+        node_load_profiles:
+          res_1:
+            - 0.308
+            - 0.082
+            - 0.05
+            - 0.2
+            - 0.095
+            - 0.125
+            - 0.11
+            - 0.03
+        resource_absolute_values:
+          res_1: 100
+        std: 1
+      resource_name_mappings:
+        res_1: bandwidth
+      synthetic_model:
+        change_distribution_frequency: 168
+        couples_config:
+          - calm_load: 0.3
+            calm_load_equal: true
+            keep_stress: 6
+            std: 1
+            stress_every:
+              hour:
+                - 16
+              week_day:
+                - 2
+                - 5
+            stress_load: 1
+            swap_stress: true
+          - calm_load: 0.3
+            calm_load_equal: true
+            keep_stress: 7
+            std: 1
+            stress_every:
+              hour:
+                - 15
+              week_day:
+                - 2
+                - 5
+            stress_load: 1
+            swap_stress: true
+        demand_absolute_value: 80.0
+        distribution_multipliers:
+          - 1
+        episode_length: 168
+        model_step_size: 3600
+      test_model_options:
+        couples_delay_update: 5
+        increase_for_steps: 3
+        increase_step: 5
+        n_nodes: 2
+        noise_std: 2
+        start_demand: 24.0
+        steps_before_change: 10
+      tim_dataset_model_options:
+        bs_data_path: models/tim_dataset/aggregated_bs_data-LTE.csv
+        bs_ids:
+          - 2841
+          - 1760
+          - 2042
+          - 2338
+          - 2340
+          - 2774
+          - 2041
+          - 2927
+          - 2345
+          - 2120
+          - 2920
+          - 3004
+          - 2194
+          - 2192
+          - 2344
+          - 2343
+          - 2266
+          - 2113
+          - 2269
+          - 2263
+        change_load_frequencies:
+          training: 168
+          validation: 168
+          evaluation: 168
+        chunks_extension: csv
+        chunks_path: null
+        demand_column: internet
+        full_data_path: models/tim_dataset/20-nodes/full_data.csv
+        hour_col: hour
+        idx_column: idx
+        index_data_path: models/tim_dataset/indexes/20-nodes-data-index.json
+        load_ran_configurations: false
+        load_ratio: 0.8
+        loads_with_respect_to_capacity:
+          training:
+            - 0.8
+          validation:
+            - 0.8
+          evaluation:
+            - 0.8
+        ran_configurations_path: NULL
+        month_col: month
+        node_id_column: aggregated_bs_id
+        separator: ','
+        step_size: 3600
+        time_step:
+          training:
+            start_date: 4w 2W 1555200t
+            end_date: 4w 2M 5184000t
+          validation:
+            start_date: 4w 345600t
+            end_date: 4w 1W 950400t
+          evaluation:
+            start_date: 4w 1W 950400t
+            end_date: 4w 2W 1555200t
+        use_index: true
+        week_col: week
+        week_day_col: weekday
+      type: synthetic-model
+  environment:
+    action_space:
+      bucket_move:
+        - 1
+    agent:
+      actor_critic:
+        add_node_hidden_units:
+          - 64
+          - 128
+          - 64
+        batch_size: 900
+        deterministic_eval: true
+        gamma: 1
+        learn_add_node: true
+        learning_rate: 0.005
+        learning_rate_add_node: 0.005
+        n_actor_updates_per_agent_update: 1
+        n_agent_train_steps_per_iter: 1
+        n_critic_updates_per_agent_update: 1
+        n_grad_steps_per_target_update: 2
+        n_target_updates: 2
+        net_addition_parameters:
+          hidden_units:
+            - 64
+            - 128
+            - 256
+          activation: tanh
+          batch_normalization: false
+          same_net_config: true
+        net_type: fully-connected
+        rnn_layer: false
+        rnn_n_layers: 1
+        rnn_out_units: 128
+        standardize_advantage: true
+      combine_last_sub_actions: true
+      double_dqn:
+        batch_size: 128
+        bootstrap_steps: 500
+        epsilon_parameters:
+          start: 1
+          end: 0.001
+          total: 500
+          decay: 1800
+          alternate_values:
+            - - 100
+              - 150
+            - - 150
+              - 250
+        epsilon_type: linear-decay
+        gamma: 0.99
+        learning_rate: 0.0001
+        q_net_addition_parameters:
+          hidden_units:
+            - 64
+            - 128
+            - 128
+            - 256
+          batch_normalization: true
+        q_net_type: dueling
+        target_net_update_frequency: 168
+        theta_parameters:
+          start: 1
+          end: 0
+          total: 0
+        train_with_expert: true
+        updates_per_step: 1
+        use_full_stochastic_policy: false
+        use_stochastic_policy: false
+      global_parameters: {}
+      model_load:
+        load_model: false
+        model_load_options:
+          base_path: ''
+          mode: disk
+          path: null
+          use_ssh_tunnel: false
+      reinforce:
+        add_node_hidden_units:
+          - 64
+          - 128
+          - 64
+        deterministic_eval: true
+        gamma: 0.99
+        learn_add_node: true
+        learning_rate: 0.005
+        learning_rate_add_node: 0.005
+        net_addition_parameters:
+          hidden_units:
+            - 64
+            - 128
+            - 256
+          activation: relu
+          batch_normalization: false
+          same_net_config: true
+        net_type: fully-connected
+        standardize_returns: true
+      replay_buffer:
+        alpha: 0.6
+        beta: 0.4
+        beta_annealing_steps: 1000
+        capacity: 0
+        enabled: true
+        prioritized_epsilon: 1.0e-06
+        type: uniform-buffer
+      sampling_optimal:
+        batch_size: 3
+      type: double-dqn
+    budget_feature:
+      budget: 1000
+      enabled: true
+      penalty: 1000
+    episode:
+      enabled: true
+      lives: 300
+      loose_life_threshold: 0
+    logger:
+      handlers:
+        - type: console
+          parameters: null
+        - type: file
+          parameters:
+            log_folder: load_balancer
+            log_basepath: logs
+      level: 10
+      name: environment
+    node_groups:
+      enabled: false
+    nodes:
+      n_nodes: 4
+      node_resource_distribution: pool
+      nodes_type_distribution: equally
+      resource_distribution_parameters:
+        initial_node_units: 3
+      use_pool_node: true
+    providers:
+      n_providers: 1
+    resources:
+      - allocated: 50
+        bucket_size: 1
+        classes:
+          resource:
+            cost: 1
+            capacity: 10
+            allocated: 5
+        min_resource_buckets_per_node: 0
+        name: res_1
+        total_available: 200
+        total_units: 20
+        units_allocated: 5
+    reward:
+      disable_cost: false
+      invalid_action_penalty: -100
+      multi_reward: true
+      null_between_interval: 3600
+      null_reward: 0
+      parameters:
+        alpha: 1
+        scalarized: true
+        scalarization_function: linear
+        normalize_objectives: true
+        training_normalization_range:
+          - 0
+          - 10
+        val_eval_normalization_range:
+          - 0
+          - 1
+        clipped_remaining_gap: false
+        zero_remaining_gap_reward: 0
+        weights:
+          - 0.6
+          - 0.3
+          - 0.1
+        gap_with_units: true
+        hour_satisfied_bonus: 0
+        satisfied_or_nothing: false
+        delta_target: 0
+        training_success_reward: 10
+        val_eval_success_reward: 1
+      type: gap-surplus-cost
+    state:
+      additional_properties:
+        units_to_skip:
+          - second_step
+          - second
+          - minute
+          - week
+          - month
+          - year
+          - total_steps
+        resource_units_normalization: total
+        delta_with_units: true
+      base_features:
+        - pool-capacity
+        - node-capacity
+        - node-demand
+        - node-delta
+        - time-encoded
+        - current-lives
+        - node-add
+      features:
+        - pool-capacity
+        - node-capacity
+        - node-demand
+        - node-delta
+        - time-encoded
+        - current-lives
+        - node-add
+      floor_deltas: true
+      node_groups_with_resource_classes: true
+      normalized: true
+      stack_n_states: 1
+    sub_agents_setup:
+      add_full_space: true
+      full_action_split: true
+      same_reward: true
+      same_state_features: true
+  logger:
+    handlers:
+      - type: console
+        parameters: null
+      - type: file
+        parameters:
+          log_folder: load_balancer
+          log_basepath: logs
+    level: 10
+    name: global
+  multi_run:
+    is_multi_run: false
+    multi_run_code: null
+    multi_run_params: []
+  random_seeds:
+    evaluation:
+      - 1000
+    training: 10
+    validation:
+      - 100
+  redis:
+    db: 0
+    enabled: true
+    host: localhost
+    port: 6379
+    update_frequency: 1
+  run:
+    bootstrapping_steps: 0
+    debug_frequency: 1
+    episode_per_iteration: 1
+    evaluation_episode_length: 168
+    info_frequency: 4
+    initial_date: null
+    last_validation_metrics: 4
+    rollout_batch_size: 168
+    run_mode: evaluation
+    save_n_models_after_best: 0
+    step_per_second: 1
+    step_size: 3600
+    stop_date: null
+    stop_step: 3600000
+    train_every_hour_only: false
+    training_iterations: 1000
+    use_on_policy_agent: false
+    validation_run:
+      debug_frequency: 86400
+      enabled: true
+      info_frequency: 86400
+      initial_date: null
+      keep_metric: evaluation/avg/reward/utility
+      keep_n_validation_best: 0
+      logger_level: 20
+      rollout_batch_size: 168
+      step_per_second: 1
+      step_size: 1
+      stop_date: 1h
+      stop_step: -1
+      validation_frequency: 4
+      validation_keep_metric: validation/avg/reward/utility
+  saver:
+    base_path: results
+    default_bucket: results
+    enabled: true
+    mode: disk
+    save_agent: true
+    save_name: ''
+    save_name_with_date: true
+    save_name_with_uuid: true
+    save_prefix: ''
+    stats_condensed: true
+    tensorboard:
+      enabled: false
+      save_model_graph: false
+      save_path: tensorboard
+  version: 2.0.0
+hyperparameters:
+  random:
+    - key: param.key
+      type: root
+      values:
+        - random_seeds.evaluation:
+            - 1000
+        - random_seeds.evaluation:
+            - 1100
+        - random_seeds.evaluation:
+            - 1200
+        - random_seeds.evaluation:
+            - 1300
+        - random_seeds.evaluation:
+            - 1400
+        - random_seeds.evaluation:
+            - 1500
+        - random_seeds.evaluation:
+            - 1600
+        - random_seeds.evaluation:
+            - 1700
+        - random_seeds.evaluation:
+            - 1800
+        - random_seeds.evaluation:
+            - 1900
+      values_mode: multi-array
+  greedy-optimal:
+    - key: param.key
+      type: root
+      values:
+        - random_seeds.evaluation:
+            - 1000
+        - random_seeds.evaluation:
+            - 1100
+        - random_seeds.evaluation:
+            - 1200
+        - random_seeds.evaluation:
+            - 1300
+        - random_seeds.evaluation:
+            - 1400
+        - random_seeds.evaluation:
+            - 1500
+        - random_seeds.evaluation:
+            - 1600
+        - random_seeds.evaluation:
+            - 1700
+        - random_seeds.evaluation:
+            - 1800
+        - random_seeds.evaluation:
+            - 1900
+      values_mode: multi-array
+  sampling-optimal:
+    - key: param.key
+      type: root
+      values:
+        - random_seeds.evaluation:
+            - 1000
+        - random_seeds.evaluation:
+            - 1100
+        - random_seeds.evaluation:
+            - 1200
+        - random_seeds.evaluation:
+            - 1300
+        - random_seeds.evaluation:
+            - 1400
+        - random_seeds.evaluation:
+            - 1500
+        - random_seeds.evaluation:
+            - 1600
+        - random_seeds.evaluation:
+            - 1700
+        - random_seeds.evaluation:
+            - 1800
+        - random_seeds.evaluation:
+            - 1900
+      values_mode: multi-array
+  exhaustive-search:
+    - key: param.key
+      type: root
+      values:
+        - random_seeds.evaluation:
+            - 1000
+        - random_seeds.evaluation:
+            - 1100
+        - random_seeds.evaluation:
+            - 1200
+        - random_seeds.evaluation:
+            - 1300
+        - random_seeds.evaluation:
+            - 1400
+        - random_seeds.evaluation:
+            - 1500
+        - random_seeds.evaluation:
+            - 1600
+        - random_seeds.evaluation:
+            - 1700
+        - random_seeds.evaluation:
+            - 1800
+        - random_seeds.evaluation:
+            - 1900
+      values_mode: multi-array
+multi_run_name: sensitivity_analysis-high_load-baselines
+random_seeds:
+  run:
+    - 10
+skip_name_date: false
