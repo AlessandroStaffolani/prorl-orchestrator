@@ -78,7 +78,9 @@ For questions or further information, please contact:
     pip install -r requirements.txt
     ```
 
-3. **Start Docker Compose:**
+3. **Set up env variables:** use the `.env.sample` file as a template and create the `.env` file filled with your variables.
+
+4. **Start Docker Compose:**
 
     The provided Docker Compose file sets up both Redis and MongoDB.
 
@@ -86,7 +88,7 @@ For questions or further information, please contact:
     docker compose -f docker/docker-compose.yml up -d
     ```
 
-4. **Prepare the Dataset:**
+5. **Prepare the Dataset:**
 
     Follow the instructions in the [tim-dataset-pipeline](https://github.com/AlessandroStaffolani/tim-dataset-pipeline) repository to set up the necessary dataset.
 
